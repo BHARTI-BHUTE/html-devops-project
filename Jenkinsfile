@@ -6,20 +6,32 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Downloading source code from GitHub'
+                echo 'Downloading latest code from GitHub'
             }
         }
 
-        stage('Verify Files') {
+        stage('Verify Project') {
             steps {
                 sh 'pwd'
                 sh 'ls -la'
             }
         }
 
-        stage('Build Complete') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Pipeline completed successfully.'
+                sh 'docker build -t html-app:v1 .'
+            }
+        }
+
+        stage('Verify Docker Image') {
+            steps {
+                sh 'docker images'
+            }
+        }
+
+        stage('Pipeline Completed') {
+            steps {
+                echo 'Docker Image Created Successfully'
             }
         }
 
